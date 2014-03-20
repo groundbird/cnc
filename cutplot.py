@@ -22,6 +22,7 @@ Usage: cutplot.py (-g [1 or 2])
 
 def parser(_s):
     s = _s.strip()
+    if len(s) == 0: return None
     if s[0] in ['%', '(', 'M']: return None
     ret = {}
     index = []

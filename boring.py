@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import sys
+import datetime as dt
 import numpy as np
 
 def boring(x, y, z, r):
@@ -10,7 +12,7 @@ def boring(x, y, z, r):
     z:    穴の深さ
     r:    穴の直径
     """
-    n = 32                # 頂点の数
+    n = 64                # 頂点の数
     f = 200.              # 切削速度
     f_z = 60.             # 下降速度
     step = 0.05           # 1回の切込み量
@@ -26,6 +28,7 @@ def boring(x, y, z, r):
             x_k = x + r_eff*np.cos(2*np.pi*k/n)
             y_k = y + r_eff*np.sin(2*np.pi*k/n)
             print 'X%.4fY%.4f' % (x_k, y_k)
+    print '(end boring)'
 
 def init(fname):
     print '%'
@@ -46,7 +49,7 @@ if __name__ == '__main__':
     y = float(sys.argv[2])
     z = float(sys.argv[3])
     r = float(sys.argv[4])
-    fname = 'boring.nc'
+    fname = 'boring_%s.nc' % dt.datetime.now().strftime('%Y%m%d%H%M')
     sys.stdout = open(fname, 'w')
     init(fname)
     boring(x, y, z, r)
@@ -54,3 +57,4 @@ if __name__ == '__main__':
     sys.stdout.close()
     sys.stdout = sys.__stdout__
     print open(fname, 'r').read()
+    os.system('mv %s ~/Dropbox/hikaru/kitmill' % fname)
